@@ -1,16 +1,79 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><title>Table Test</title></head>
+<head>
+  <meta charset="UTF-8">
+  <title>Table Test</title>
+</head>
 <body>
-  <h2>Simple Table</h2>
+  <h1>TalkBack Table Navigation Test</h1>
+  <p>This page contains three 10x10 tables, each with a heading and description to help screen reader users identify structure and navigation flow.</p>
+
+  <h2>1. User Profile Table</h2>
+  <p>This table simulates a list of user profiles including contact information and status.</p>
   <table border="1">
     <thead>
-      <tr><th>Name</th><th>Age</th></tr>
+      <tr>
+        <th>ID</th><th>Name</th><th>Age</th><th>Email</th><th>Phone</th>
+        <th>City</th><th>Country</th><th>Status</th><th>Role</th><th>Note</th>
+      </tr>
     </thead>
     <tbody>
-      <tr><td>Alice</td><td>30</td></tr>
-      <tr><td>Bob</td><td>25</td></tr>
+      <tr><td>1</td><td>Alice</td><td>28</td><td>alice@mail.com</td><td>123456</td><td>NY</td><td>USA</td><td>Active</td><td>User</td><td>None</td></tr>
+      <tr><td>2</td><td>Bob</td><td>30</td><td>bob@mail.com</td><td>234567</td><td>LA</td><td>USA</td><td>Active</td><td>Admin</td><td>On leave</td></tr>
+      <tr><td>3</td><td>Carol</td><td>26</td><td>carol@mail.com</td><td>345678</td><td>London</td><td>UK</td><td>Inactive</td><td>Editor</td><td>Remote</td></tr>
+      <tr><td>4</td><td>David</td><td>32</td><td>david@mail.com</td><td>456789</td><td>Berlin</td><td>DE</td><td>Active</td><td>User</td><td>New</td></tr>
+      <tr><td>5</td><td>Eve</td><td>24</td><td>eve@mail.com</td><td>567890</td><td>Paris</td><td>FR</td><td>Pending</td><td>User</td><td>Trial</td></tr>
+      <tr><td>6</td><td>Frank</td><td>29</td><td>frank@mail.com</td><td>678901</td><td>Rome</td><td>IT</td><td>Inactive</td><td>Admin</td><td>Old</td></tr>
+      <tr><td>7</td><td>Grace</td><td>27</td><td>grace@mail.com</td><td>789012</td><td>Madrid</td><td>ES</td><td>Active</td><td>Editor</td><td>Onboard</td></tr>
+      <tr><td>8</td><td>Hank</td><td>31</td><td>hank@mail.com</td><td>890123</td><td>Tokyo</td><td>JP</td><td>Active</td><td>Admin</td><td>Key</td></tr>
+      <tr><td>9</td><td>Ivy</td><td>22</td><td>ivy@mail.com</td><td>901234</td><td>Sydney</td><td>AU</td><td>Pending</td><td>User</td><td>Newbie</td></tr>
+      <tr><td>10</td><td>Jake</td><td>35</td><td>jake@mail.com</td><td>012345</td><td>Seoul</td><td>KR</td><td>Active</td><td>Manager</td><td>Important</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2. Product Inventory Table</h2>
+  <p>This table represents a list of products with categories, stock levels, and prices.</p>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>ID</th><th>Product</th><th>Category</th><th>Price</th><th>Stock</th>
+        <th>Sold</th><th>Supplier</th><th>Rating</th><th>Review</th><th>Note</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Laptop</td><td>Electronics</td><td>$999</td><td>50</td><td>40</td><td>Dell</td><td>4.5</td><td>200</td><td>Top seller</td></tr>
+      <tr><td>2</td><td>Mouse</td><td>Accessories</td><td>$19</td><td>300</td><td>250</td><td>Logi</td><td>4.2</td><td>180</td><td>Popular</td></tr>
+      <tr><td>3</td><td>Keyboard</td><td>Accessories</td><td>$49</td><td>200</td><td>170</td><td>HP</td><td>4.3</td><td>150</td><td>-</td></tr>
+      <tr><td>4</td><td>Monitor</td><td>Electronics</td><td>$199</td><td>80</td><td>60</td><td>Samsung</td><td>4.6</td><td>140</td><td>Featured</td></tr>
+      <tr><td>5</td><td>Phone</td><td>Mobile</td><td>$799</td><td>100</td><td>90</td><td>Apple</td><td>4.8</td><td>300</td><td>New model</td></tr>
+      <tr><td>6</td><td>Tablet</td><td>Mobile</td><td>$499</td><td>60</td><td>50</td><td>Lenovo</td><td>4.0</td><td>120</td><td>-</td></tr>
+      <tr><td>7</td><td>Charger</td><td>Accessories</td><td>$15</td><td>400</td><td>350</td><td>Anker</td><td>4.1</td><td>80</td><td>Essential</td></tr>
+      <tr><td>8</td><td>Speaker</td><td>Audio</td><td>$129</td><td>70</td><td>65</td><td>JBL</td><td>4.7</td><td>90</td><td>Loud</td></tr>
+      <tr><td>9</td><td>Camera</td><td>Electronics</td><td>$599</td><td>30</td><td>28</td><td>Canon</td><td>4.4</td><td>110</td><td>HD</td></tr>
+      <tr><td>10</td><td>TV</td><td>Electronics</td><td>$999</td><td>40</td><td>35</td><td>Sony</td><td>4.9</td><td>200</td><td>Premium</td></tr>
+    </tbody>
+  </table>
+
+  <h2>3. Daily Schedule Table</h2>
+  <p>This table outlines a sample daily schedule for a 10-hour workday.</p>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Time</th><th>Task</th><th>Location</th><th>Duration</th><th>Category</th>
+        <th>Priority</th><th>Assigned</th><th>Notes</th><th>Status</th><th>Backup</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>08:00</td><td>Emails</td><td>Desk</td><td>30 min</td><td>Admin</td><td>Low</td><td>Self</td><td>Reply all</td><td>Done</td><td>-</td></tr>
+      <tr><td>08:30</td><td>Stand-up</td><td>Room A</td><td>15 min</td><td>Meeting</td><td>High</td><td>Team</td><td>Daily sync</td><td>Done</td><td>-</td></tr>
+      <tr><td>08:45</td><td>Code Review</td><td>Desk</td><td>1 hr</td><td>Dev</td><td>Medium</td><td>Lead</td><td>Repo #52</td><td>Ongoing</td><td>Yuki</td></tr>
+      <tr><td>09:45</td><td>Design Review</td><td>Room B</td><td>1 hr</td><td>Design</td><td>Medium</td><td>UX</td><td>Homepage</td><td>Planned</td><td>Naomi</td></tr>
+      <tr><td>10:45</td><td>Development</td><td>Desk</td><td>2 hr</td><td>Dev</td><td>High</td><td>Dev Team</td><td>Frontend</td><td>In Progress</td><td>-</td></tr>
+      <tr><td>12:45</td><td>Lunch</td><td>Cafe</td><td>1 hr</td><td>Break</td><td>Low</td><td>Self</td><td>-</td><td>Scheduled</td><td>-</td></tr>
+      <tr><td>13:45</td><td>1:1</td><td>Room C</td><td>30 min</td><td>Meeting</td><td>High</td><td>Manager</td><td>Check-in</td><td>Pending</td><td>-</td></tr>
+      <tr><td>14:15</td><td>Testing</td><td>Lab</td><td>1 hr</td><td>QA</td><td>High</td><td>QA Team</td><td>Regression</td><td>In Progress</td><td>Mike</td></tr>
+      <tr><td>15:15</td><td>Documentation</td><td>Desk</td><td>1 hr</td><td>Admin</td><td>Medium</td><td>Tech Writer</td><td>API Guide</td><td>Pending</td><td>-</td></tr>
+      <tr><td>16:15</td><td>Wrap-up</td><td>Desk</td><td>45 min</td><td>Admin</td><td>Low</td><td>Self</td><td>Review Day</td><td>Planned</td><td>-</td></tr>
     </tbody>
   </table>
 </body>
