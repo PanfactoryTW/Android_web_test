@@ -2,101 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkbox Test - Advanced</title>
+    <title>Advanced Checkbox Test Station</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
-        section { margin-bottom: 30px; border: 1px solid #ccc; padding: 15px; border-radius: 8px; }
-        .custom-checkbox { display: inline-block; padding: 5px 10px; border: 2px solid #333; cursor: pointer; }
-        .custom-checkbox[aria-checked="true"]::before { content: "✅ "; }
-        .custom-checkbox[aria-checked="false"]::before { content: "⬜ "; }
-        .custom-checkbox[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
-        .error-text { color: red; font-size: 0.9em; display: block; }
-        h2 { border-bottom: 2px solid #555; }
+        body { font-family: sans-serif; padding: 20px; }
+        .test-group { margin-bottom: 20px; border: 1px solid #ddd; padding: 10px; }
+        /* 讓自定義 Checkbox 看起來像個東西 */
+        [role="checkbox"] { 
+            display: inline-block; padding: 5px; border: 1px solid #666; cursor: pointer; 
+        }
+        [role="checkbox"][aria-checked="true"]::before { content: "☑️ "; }
+        [role="checkbox"][aria-checked="false"]::before { content: "⬜ "; }
     </style>
 </head>
 <body>
-    <h1>Checkbox 綜合測試頁面</h1>
+    <h2>Checkbox 深度測試頁面</h2>
 
-    <section>
-        <h2>1. 原生 Checkbox (Native Elements)</h2>
-        <div>
-            <label><input type="checkbox"> 預設未選取</label>
-        </div>
-        <div>
-            <label><input type="checkbox" checked> 預設已選取</label>
-        </div>
-        <div>
-            <label><input type="checkbox" disabled> 停用狀態 (Disabled)</label>
-        </div>
-        <div>
-            <label><input type="checkbox" checked disabled> 已選取且停用</label>
-        </div>
-        <div>
-            <label><input type="checkbox" required> 必填欄位 (Required)</label>
-        </div>
-    </section>
+    <div class="test-group">
+        <h3>原生控制項 (Native)</h3>
+        <label><input type="checkbox"> 預設未選</label><br>
+        <label><input type="checkbox" checked> 預設已選</label><br>
+        <label><input type="checkbox" disabled> 停用 (Disabled)</label><br>
+        <label><input type="checkbox" aria-invalid="true"> 錯誤狀態 (Invalid)</label>
+    </div>
 
-    <section>
-        <h2>2. ARIA 模擬 Checkbox (Role="checkbox")</h2>
-        <p>測試 TalkBack 是否能識別非原生標籤的狀態變化：</p>
-        <div role="checkbox" aria-checked="false" tabindex="0" class="custom-checkbox">
-            ARIA 未選取
-        </div>
-        <div role="checkbox" aria-checked="true" tabindex="0" class="custom-checkbox">
-            ARIA 已選取
-        </div>
-        <div role="checkbox" aria-checked="false" aria-disabled="true" tabindex="0" class="custom-checkbox">
-            ARIA 停用狀態
-        </div>
-    </section>
+    <div class="test-group">
+        <h3>自定義控制項 (ARIA)</h3>
+        <div role="checkbox" aria-checked="false" tabindex="0">ARIA 模擬核取方塊</div>
+        <div role="checkbox" aria-checked="true" aria-disabled="true" tabindex="0">ARIA 停用且已選</div>
+    </div>
 
-    <section>
-        <h2>3. 驗證與錯誤狀態 (Validation)</h2>
-        <div>
-            <label>
-                <input type="checkbox" aria-invalid="true" aria-describedby="error-msg">
-                我同意服務條款 (標記為無效)
-            </label>
-            <span id="error-msg" class="error-text">請勾選此項以繼續。</span>
-        </div>
-    </section>
-
-    <section>
-        <fieldset>
-            <legend>4. 興趣愛好 (Fieldset 群組測試)</legend>
-            <label><input type="checkbox" name="hobby" value="music"> 音樂 (Guitar/Composition)</label><br>
-            <label><input type="checkbox" name="hobby" value="tech"> 科技 (QA/Automation)</label><br>
-            <label><input type="checkbox" name="hobby" value="sports"> 運動</label>
-        </fieldset>
-    </section>
-
-    <section>
-        <h2>5. 混合狀態 (Indeterminate)</h2>
-        <label>
-            <input type="checkbox" id="mixed-cb"> 全選/混合狀態 (需透過 JS 觸發)
-        </label>
-        <script>
-            document.getElementById('mixed-cb').indeterminate = true;
-        </script>
-    </section>
-
-    <p><a href="index.html">返回首頁</a></p>
+    <fieldset class="test-group">
+        <legend>興趣調查 (Fieldset 群組)</legend>
+        <label><input type="checkbox" name="music"> 音樂製作</label><br>
+        <label><input type="checkbox" name="tech"> 自動化測試</label>
+    </fieldset>
 
     <script>
-        // 簡單的 JS 讓 ARIA Checkbox 具備點擊互動，方便測試動態朗讀
-        document.querySelectorAll('[role="checkbox"]').forEach(cb => {
-            cb.addEventListener('click', function() {
-                if (this.getAttribute('aria-disabled') === 'true') return;
-                const isChecked = this.getAttribute('aria-checked') === 'true';
-                this.setAttribute('aria-checked', !isChecked);
-            });
-            // 處理鍵盤空白鍵觸發
-            cb.addEventListener('keydown', function(e) {
-                if (e.code === 'Space') {
-                    e.preventDefault();
-                    this.click();
-                }
+        // 增加點擊邏輯，方便你測試 TalkBack 的動態朗讀變化
+        document.querySelectorAll('[role="checkbox"]').forEach(el => {
+            el.addEventListener('click', () => {
+                const checked = el.getAttribute('aria-checked') === 'true';
+                el.setAttribute('aria-checked', !checked);
             });
         });
     </script>
