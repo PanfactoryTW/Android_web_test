@@ -2,47 +2,94 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Advanced Checkbox Test Station</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox Accessibility Test Station</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; }
-        .test-group { margin-bottom: 20px; border: 1px solid #ddd; padding: 10px; }
-        /* 讓自定義 Checkbox 看起來像個東西 */
-        [role="checkbox"] { 
-            display: inline-block; padding: 5px; border: 1px solid #666; cursor: pointer; 
-        }
-        [role="checkbox"][aria-checked="true"]::before { content: "☑️ "; }
-        [role="checkbox"][aria-checked="false"]::before { content: "⬜ "; }
+        body { font-family: sans-serif; padding: 20px; line-height: 1.6; color: #333; }
+        .test-section { margin-bottom: 30px; border: 1px solid #ccc; padding: 15px; border-radius: 8px; }
+        .custom-cb { display: inline-block; padding: 5px 10px; border: 2px solid #555; cursor: pointer; background: #f9f9f9; }
+        .custom-cb[aria-checked="true"]::before { content: "✅ "; }
+        .custom-cb[aria-checked="false"]::before { content: "⬜ "; }
+        .custom-cb[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; border-color: #999; }
+        .error-text { color: #d93025; font-size: 0.9em; display: block; margin-top: 5px; }
+        h2 { border-bottom: 2px solid #eee; padding-bottom: 5px; }
     </style>
 </head>
 <body>
-    <h2>Checkbox 深度測試頁面</h2>
+    <h1>General User Preferences - Checkbox Test</h1>
 
-    <div class="test-group">
-        <h3>原生控制項 (Native)</h3>
-        <label><input type="checkbox"> 預設未選</label><br>
-        <label><input type="checkbox" checked> 預設已選</label><br>
-        <label><input type="checkbox" disabled> 停用 (Disabled)</label><br>
-        <label><input type="checkbox" aria-invalid="true"> 錯誤狀態 (Invalid)</label>
-    </div>
+    <section class="test-section">
+        <h2>1. Notification Settings (Native)</h2>
+        <div>
+            <label><input type="checkbox"> Receive weekly newsletter</label>
+        </div>
+        <div>
+            <label><input type="checkbox" checked> Enable SMS notifications</label>
+        </div>
+        <div>
+            <label><input type="checkbox" disabled> Beta program (Closed)</label>
+        </div>
+        <div>
+            <label><input type="checkbox" checked disabled> Terms of Service accepted</label>
+        </div>
+    </section>
 
-    <div class="test-group">
-        <h3>自定義控制項 (ARIA)</h3>
-        <div role="checkbox" aria-checked="false" tabindex="0">ARIA 模擬核取方塊</div>
-        <div role="checkbox" aria-checked="true" aria-disabled="true" tabindex="0">ARIA 停用且已選</div>
-    </div>
+    <section class="test-section">
+        <h2>2. Display Options (ARIA)</h2>
+        <div role="checkbox" aria-checked="false" tabindex="0" class="custom-cb">
+            Dark mode
+        </div>
+        <div style="margin-top: 10px;">
+            <div role="checkbox" aria-checked="true" aria-disabled="true" tabindex="0" class="custom-cb">
+                High contrast (System enforced)
+            </div>
+        </div>
+    </section>
 
-    <fieldset class="test-group">
-        <legend>興趣調查 (Fieldset 群組)</legend>
-        <label><input type="checkbox" name="music"> 音樂製作</label><br>
-        <label><input type="checkbox" name="tech"> 自動化測試</label>
-    </fieldset>
+    <section class="test-section">
+        <h2>3. Consent & Validation</h2>
+        <div>
+            <label>
+                <input type="checkbox" required aria-invalid="true" aria-describedby="err-1">
+                I agree to the Privacy Policy
+            </label>
+            <span id="err-1" class="error-text">Error: This field is required to proceed.</span>
+        </div>
+    </section>
+
+    <section class="test-section">
+        <fieldset>
+            <legend>4. Shipping Preferences (Fieldset Group)</legend>
+            <label><input type="checkbox" name="ship" value="door"> Door-to-door delivery</label><br>
+            <label><input type="checkbox" name="ship" value="pickup"> Local pickup point</label><br>
+            <label><input type="checkbox" name="ship" value="express"> International express</label>
+        </fieldset>
+    </section>
+
+    <section class="test-section">
+        <h2>5. Bulk Actions</h2>
+        <label>
+            <input type="checkbox" id="master-cb"> Select all items (Mixed state)
+        </label>
+    </section>
 
     <script>
-        // 增加點擊邏輯，方便你測試 TalkBack 的動態朗讀變化
-        document.querySelectorAll('[role="checkbox"]').forEach(el => {
-            el.addEventListener('click', () => {
-                const checked = el.getAttribute('aria-checked') === 'true';
-                el.setAttribute('aria-checked', !checked);
+        // Set indeterminate state via JS
+        document.getElementById('master-cb').indeterminate = true;
+
+        // ARIA Checkbox Toggle Logic
+        document.querySelectorAll('[role="checkbox"]').forEach(cb => {
+            cb.addEventListener('click', function() {
+                if (this.getAttribute('aria-disabled') === 'true') return;
+                const isChecked = this.getAttribute('aria-checked') === 'true';
+                this.setAttribute('aria-checked', !isChecked);
+            });
+            // Support Space key for accessibility
+            cb.addEventListener('keydown', function(e) {
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    this.click();
+                }
             });
         });
     </script>
