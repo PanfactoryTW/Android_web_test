@@ -1,9 +1,104 @@
-<h3>State Tests</h3>
-<div role="checkbox" aria-checked="true" aria-disabled="true" tabindex="0">
-  ARIA Checkbox (已選取且停用)
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox Test - Advanced</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
+        section { margin-bottom: 30px; border: 1px solid #ccc; padding: 15px; border-radius: 8px; }
+        .custom-checkbox { display: inline-block; padding: 5px 10px; border: 2px solid #333; cursor: pointer; }
+        .custom-checkbox[aria-checked="true"]::before { content: "✅ "; }
+        .custom-checkbox[aria-checked="false"]::before { content: "⬜ "; }
+        .custom-checkbox[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
+        .error-text { color: red; font-size: 0.9em; display: block; }
+        h2 { border-bottom: 2px solid #555; }
+    </style>
+</head>
+<body>
+    <h1>Checkbox 綜合測試頁面</h1>
 
-<label>
-  <input type="checkbox" required aria-label="必填服務條款"> 
-  原生 Checkbox (帶有隱形標籤與必填屬性)
-</label>
+    <section>
+        <h2>1. 原生 Checkbox (Native Elements)</h2>
+        <div>
+            <label><input type="checkbox"> 預設未選取</label>
+        </div>
+        <div>
+            <label><input type="checkbox" checked> 預設已選取</label>
+        </div>
+        <div>
+            <label><input type="checkbox" disabled> 停用狀態 (Disabled)</label>
+        </div>
+        <div>
+            <label><input type="checkbox" checked disabled> 已選取且停用</label>
+        </div>
+        <div>
+            <label><input type="checkbox" required> 必填欄位 (Required)</label>
+        </div>
+    </section>
+
+    <section>
+        <h2>2. ARIA 模擬 Checkbox (Role="checkbox")</h2>
+        <p>測試 TalkBack 是否能識別非原生標籤的狀態變化：</p>
+        <div role="checkbox" aria-checked="false" tabindex="0" class="custom-checkbox">
+            ARIA 未選取
+        </div>
+        <div role="checkbox" aria-checked="true" tabindex="0" class="custom-checkbox">
+            ARIA 已選取
+        </div>
+        <div role="checkbox" aria-checked="false" aria-disabled="true" tabindex="0" class="custom-checkbox">
+            ARIA 停用狀態
+        </div>
+    </section>
+
+    <section>
+        <h2>3. 驗證與錯誤狀態 (Validation)</h2>
+        <div>
+            <label>
+                <input type="checkbox" aria-invalid="true" aria-describedby="error-msg">
+                我同意服務條款 (標記為無效)
+            </label>
+            <span id="error-msg" class="error-text">請勾選此項以繼續。</span>
+        </div>
+    </section>
+
+    <section>
+        <fieldset>
+            <legend>4. 興趣愛好 (Fieldset 群組測試)</legend>
+            <label><input type="checkbox" name="hobby" value="music"> 音樂 (Guitar/Composition)</label><br>
+            <label><input type="checkbox" name="hobby" value="tech"> 科技 (QA/Automation)</label><br>
+            <label><input type="checkbox" name="hobby" value="sports"> 運動</label>
+        </fieldset>
+    </section>
+
+    <section>
+        <h2>5. 混合狀態 (Indeterminate)</h2>
+        <label>
+            <input type="checkbox" id="mixed-cb"> 全選/混合狀態 (需透過 JS 觸發)
+        </label>
+        <script>
+            document.getElementById('mixed-cb').indeterminate = true;
+        </script>
+    </section>
+
+    <p><a href="index.html">返回首頁</a></p>
+
+    <script>
+        // 簡單的 JS 讓 ARIA Checkbox 具備點擊互動，方便測試動態朗讀
+        document.querySelectorAll('[role="checkbox"]').forEach(cb => {
+            cb.addEventListener('click', function() {
+                if (this.getAttribute('aria-disabled') === 'true') return;
+                const isChecked = this.getAttribute('aria-checked') === 'true';
+                this.setAttribute('aria-checked', !isChecked);
+            });
+            // 處理鍵盤空白鍵觸發
+            cb.addEventListener('keydown', function(e) {
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
